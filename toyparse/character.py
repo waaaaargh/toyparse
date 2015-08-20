@@ -38,3 +38,16 @@ class NotCharacterParser(Parser):
             raise ParseError
 
 
+class CharacterClassParser(Parser):
+    def __init__(self, chars):
+        Parser.__init__(self)
+        self._chars = chars
+
+    def parse(self, text):
+        if len(text) == 0:
+            raise EndOfString
+
+        if text[0] in self._chars:
+            return self.transform(text[0]), text[1:]
+        else:
+            raise ParseError

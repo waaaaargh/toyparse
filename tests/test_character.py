@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from toyparse.character import CharacterParser, NotCharacterParser
+from toyparse.character import *
 from toyparse.parser import ParseError, EndOfString
 
 class TestCharacterParser(TestCase):
@@ -41,3 +41,25 @@ class TestNotCharacterParser(TestCase):
         self.assertRaises(ParseError, self.ncparse.parse, "c")
         self.assertRaises(EndOfString, self.ncparse.parse, "")
 
+
+class TestCharacterClassParser(TestCase):
+    def setUp(self):
+        self.ccparser = CharacterClassParser("abc")
+
+    def test_accept(self):
+        self.assertEqual(
+            self.ccparser.parse("a"),
+            ("a", "")
+        )
+        self.assertEqual(
+            self.ccparser.parse("b"),
+            ("b", "")
+        )
+        self.assertEqual(
+            self.ccparser.parse("c"),
+            ("c", "")
+        )
+
+    def test_fail(self):
+        self.assertRaises(ParseError, self.ccparser.parse, "t")
+        self.assertRaises(EndOfString, self.ccparser.parse, "")
