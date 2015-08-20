@@ -14,7 +14,7 @@ class CharacterParser(Parser):
         # return the character as result and the rest
         # of the string as left.
         if text[0] == self._character:
-            return text[0], text[1:]
+            return self.transform(text[0]), text[1:]
         else:
             raise ParseError
 
@@ -33,7 +33,7 @@ class NotCharacterParser(Parser):
         # return the character as result and the rest
         # of the string as left.
         if text[0] != self._character:
-            return text[0], text[1:]
+            return self.transform(text[0]), text[1:]
         else:
             raise ParseError
 

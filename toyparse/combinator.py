@@ -16,7 +16,7 @@ class OneOrMoreParser(Parser):
             except (ParseError, EndOfString):
                 if len(results) == 0:
                     raise ParseError
-                return results, rest
+                return self.transform(results), rest
 
 
 class AnyOfParser(Parser):
@@ -41,7 +41,7 @@ class AnyOfParser(Parser):
 
         if not valid_parser:
             raise ParseError
-        return p_result, p_rest
+        return self.transform(p_result), p_rest
 
 
 class SequenceParser(Parser):
@@ -55,4 +55,4 @@ class SequenceParser(Parser):
             tmp_result, rest = parser.parse(rest)
             results.append(tmp_result)
 
-        return results, rest
+        return self.transform(results), rest
