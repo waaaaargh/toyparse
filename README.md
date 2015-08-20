@@ -1,13 +1,13 @@
-## toyparse
+# toyparse
 
-# What
+## What
 
 A parser library in python
 
-# Why
+## Why
 
 Because I can.
 
-# How
+## How
 
 see `example.py`
