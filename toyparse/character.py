@@ -16,7 +16,7 @@ class CharacterParser(Parser):
         if text[0] == self._character:
             return self.transform(text[0]), text[1:]
         else:
-            raise ParseError
+            raise ParseError(self, text)
 
     def describe(self):
         return {"name": self.__class__.__name__,
@@ -39,7 +39,7 @@ class NotCharacterParser(Parser):
         if text[0] != self._character:
             return self.transform(text[0]), text[1:]
         else:
-            raise ParseError
+            raise ParseError(self, text)
 
     def describe(self):
         return {"name": self.__class__.__name__,
@@ -58,7 +58,7 @@ class CharacterClassParser(Parser):
         if text[0] in self._chars:
             return self.transform(text[0]), text[1:]
         else:
-            raise ParseError
+            raise ParseError(self, text)
 
     def describe(self):
         return {"name": self.__class__.__name__,

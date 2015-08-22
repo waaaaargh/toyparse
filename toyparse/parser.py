@@ -1,10 +1,10 @@
 import pprint
 
 class ParseError(Exception):
-    # def __init__(self, expected, got):
-    #     self.expected = expected
-    #     self.got = got
-    pass
+    def __init__(self, parser, got):
+        Exception.__init__(self)
+        self.parser = parser
+        self.got = got
 
 class EndOfString(Exception):
     pass

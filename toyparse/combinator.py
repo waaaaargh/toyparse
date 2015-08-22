@@ -15,7 +15,7 @@ class OneOrMoreParser(Parser):
                 results.append(result)
             except (ParseError, EndOfString):
                 if len(results) == 0:
-                    raise ParseError
+                    raise ParseError(self, text)
                 return self.transform(results), rest
 
     def describe(self):
@@ -46,7 +46,7 @@ class AnyOfParser(Parser):
                 p_result, p_rest = result, rest
 
         if not valid_parser:
-            raise ParseError
+            raise ParseError(self, text)
         return self.transform(p_result), p_rest
 
     def describe(self):
