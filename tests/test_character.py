@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from toyparse.character import *
-from toyparse.parser import ParseError, EndOfString
+from toyparse.parser import ParseError
+from toyparse.combinator import SequenceParser
 
 class TestCharacterParser(TestCase):
     def setUp(self):
@@ -20,7 +21,6 @@ class TestCharacterParser(TestCase):
 
     def test_fail(self):
         self.assertRaises(ParseError, self.cparse.parse, "f")
-        self.assertRaises(EndOfString, self.cparse.parse, "")
 
 
 class TestNotCharacterParser(TestCase):
@@ -39,7 +39,6 @@ class TestNotCharacterParser(TestCase):
 
     def test_fail(self):
         self.assertRaises(ParseError, self.ncparse.parse, "c")
-        self.assertRaises(EndOfString, self.ncparse.parse, "")
 
 
 class TestCharacterClassParser(TestCase):
@@ -62,4 +61,26 @@ class TestCharacterClassParser(TestCase):
 
     def test_fail(self):
         self.assertRaises(ParseError, self.ccparser.parse, "t")
-        self.assertRaises(EndOfString, self.ccparser.parse, "")
+
+
+class TestEndOfStringParser(TestCase):
+    def setUp(self):
+        a = CharacterParser("a")
+        b = CharacterParser("b")
+        c = CharacterParser("c")
+        eos = EndOfStringParser()
+        self.seq = SequenceParser(
+            a,
+            b,
+            c,
+            eos
+        )
+
+    def test_accept(self):
+        self.assertEqual(
+            self.seq.parse("abc"),
+            (["a", "b", "c", ""], "")
+        )
+
+    def test_fail(self):
+        self.assertRaises(ParseError, self.seq.parse, "abcd")

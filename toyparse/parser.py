@@ -6,8 +6,6 @@ class ParseError(Exception):
         self.parser = parser
         self.got = got
 
-class EndOfString(Exception):
-    pass
 
 class Parser:
     def parse(text):
