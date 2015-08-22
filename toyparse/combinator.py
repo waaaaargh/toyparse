@@ -1,4 +1,4 @@
-from toyparse.parser import Parser, ParseError, EndOfString
+from toyparse.parser import Parser, ParseError
 
 class OneOrMoreParser(Parser):
     def __init__(self, parser):
@@ -13,7 +13,7 @@ class OneOrMoreParser(Parser):
             try:
                 result, rest = self._parser.parse(rest)
                 results.append(result)
-            except (ParseError, EndOfString):
+            except ParseError:
                 if len(results) == 0:
                     raise ParseError
                 return self.transform(results), rest
