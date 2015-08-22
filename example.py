@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from toyparse.parser import Parser
+from toyparse.parser import Parser, ParseError
 from toyparse.character import CharacterParser, NotCharacterParser, CharacterClassParser
 from toyparse.combinator import SequenceParser, OneOrMoreParser, AnyOfParser
 
@@ -10,6 +10,7 @@ string = \
 """------------------------
 Author: Johannes
 Date: 2015-08-20
+asdf/asdf
 ------------------------
 """
 
@@ -56,5 +57,11 @@ headerparser = SequenceParser(
     seplineparser
 )
 
-headerparser.pprint()
-print(headerparser.parse(string))
+try:
+    headerparser.parse(string)
+except ParseError as p:
+    desc = p.parser.describe()
+    print("[e] ParseError in parser \"%s\"" % (desc['name']))
+    print("    wants: %s" % desc ['wants'])
+    print("    got: %s" % p.got[:10])
+
