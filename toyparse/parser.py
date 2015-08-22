@@ -1,4 +1,9 @@
+import pprint
+
 class ParseError(Exception):
+    # def __init__(self, expected, got):
+    #     self.expected = expected
+    #     self.got = got
     pass
 
 class EndOfString(Exception):
@@ -10,3 +15,10 @@ class Parser:
 
     def transform(self, result):
         return result
+
+    def describe(self):
+        return {"name": self.__class__.__name__}
+
+    def pprint(self):
+        pp = pprint.PrettyPrinter(indent=1)
+        pp.pprint(self.describe())

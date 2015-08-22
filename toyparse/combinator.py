@@ -18,6 +18,12 @@ class OneOrMoreParser(Parser):
                     raise ParseError
                 return self.transform(results), rest
 
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "One or more of",
+                "param": self._parser.describe()}
+
+
 
 class AnyOfParser(Parser):
     def __init__(self, *args):
@@ -43,6 +49,11 @@ class AnyOfParser(Parser):
             raise ParseError
         return self.transform(p_result), p_rest
 
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "Any of",
+                "param": [p.describe() for p in self._parsers]}
+
 
 class SequenceParser(Parser):
     def __init__(self, *args):
@@ -56,3 +67,10 @@ class SequenceParser(Parser):
             results.append(tmp_result)
 
         return self.transform(results), rest
+
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "Sequence of",
+                "param": [p.describe() for p in self._parsers]}
+
+

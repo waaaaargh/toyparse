@@ -56,4 +56,5 @@ headerparser = SequenceParser(
     seplineparser
 )
 
+headerparser.pprint()
 print(headerparser.parse(string))

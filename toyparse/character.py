@@ -18,6 +18,10 @@ class CharacterParser(Parser):
         else:
             raise ParseError
 
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "Exactly one \"%s\"" % self._character}
+
 
 class NotCharacterParser(Parser):
     def __init__(self, character):
@@ -37,6 +41,10 @@ class NotCharacterParser(Parser):
         else:
             raise ParseError
 
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "Exactly one character that isn't\"%s\"" % self._character}
+
 
 class CharacterClassParser(Parser):
     def __init__(self, chars):
@@ -51,3 +59,8 @@ class CharacterClassParser(Parser):
             return self.transform(text[0]), text[1:]
         else:
             raise ParseError
+
+    def describe(self):
+        return {"name": self.__class__.__name__,
+                "wants": "Exactly one character out of\"%s\"" % self._chars}
+
