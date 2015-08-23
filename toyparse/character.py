@@ -8,7 +8,7 @@ class CharacterParser(Parser):
     def parse(self, text):
         # If text is empty, we are done.
         if len(text) == 0:
-            raise ParseError
+            raise ParseError(self, text)
 
         # If the first character of `text` matches,
         # return the character as result and the rest
@@ -31,7 +31,7 @@ class NotCharacterParser(Parser):
     def parse(self, text):
         # If text is empty, we are done.
         if len(text) == 0:
-            raise ParseError
+            raise ParseError(self, text)
 
         # If the first character of `te-xt` doesn't match,
         # return the character as result and the rest
@@ -68,6 +68,6 @@ class CharacterClassParser(Parser):
 class EndOfStringParser(Parser):
     def parse(self, text):
         if len(text) > 0:
-            raise ParseError
+            raise ParseError(self, text)
 
         return "", ""
